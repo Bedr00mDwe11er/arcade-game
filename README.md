@@ -2,8 +2,8 @@
  
 ## Table of Contents
 
-* [How run to the application](#how to run the application)
-* [How to play](#how to play)
+* [How run to the application](#how-to-run-the-application)
+* [How to play](#how-to-play)
  
 ## How to run the application
 
