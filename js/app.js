@@ -1,6 +1,3 @@
-//TODO:check rubric
-//TODO: add this to github and submit it.
-
 // Enemies our player must avoid
 class Enemy {
     constructor() {
@@ -46,9 +43,8 @@ class Enemy {
             this.setSpeedAndYPos(Math.round(Math.random() * 10));
         }
 
-
-        //Collision detection
-        if (this.x >= player.x && this.x <= (player.x + 100) && this.y >= player.y && this.y <= (player.y + 100)) {
+        // if a collision has been detected
+        if (this.collisionDetection()) {
             //call the handleCollision method
             this.handleCollision();
         }
@@ -58,6 +54,15 @@ class Enemy {
     // Draw the enemy on the screen, required method for game
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+    //checks for collisions with the player
+    collisionDetection() {
+        if (this.x >= (player.x - 45) && this.x <= (player.x + 50) && this.y >= player.y && this.y <= (player.y + 100)) {
+            //returning true indicating a collision has occurred
+            return true;
+        }
+
     }
 
     //Handles collisions with the player
@@ -128,13 +133,8 @@ class Enemy {
 
 /*The Queen class is used to spawn the enemies*/
 class Queen {
-    constructor() {
-
-    }
-
-    //takes the allEnemies array as a parameter
-    generate(allEnemies) {
-        for (let i = 0; i < 10; i++) {
+    constructor(allEnemies) {
+      for (let i = 0; i < 10; i++) {
             //makes a new enemy and adds it to the allEnemies array
             allEnemies.push(new Enemy);
             //sets a semi random speed and y posistion for the most recently made enemy
@@ -196,7 +196,7 @@ class Player {
         */
         if (keyPressed === 'right' && this.x < 400 && this.isSelectingCharacter == false) {
             //move the player right
-            this.x += player.update(100);
+            this.x += this.update(100);
 
             //log the key that was pressed to the console
             console.log(keyPressed);
@@ -210,7 +210,7 @@ class Player {
         while the character select screen is up*/
         if (keyPressed === 'left' && this.x > 0 && this.isSelectingCharacter == false) {
             //move the player left
-            this.x -= player.update(100);
+            this.x -= this.update(100);
 
             //log the key that was pressed to the console
             console.log(keyPressed);
@@ -223,7 +223,7 @@ class Player {
         while the character select screen is up*/
         if (keyPressed === 'up' && this.y > 0 && this.isSelectingCharacter == false) {
             //move the player up
-            this.y -= player.update(100);
+            this.y -= this.update(100);
 
             //log the key that was pressed to the console
             console.log(keyPressed);
@@ -236,7 +236,7 @@ class Player {
         while the character select screen is up*/
         if (keyPressed === 'down' && this.y < 400 && this.isSelectingCharacter == false) {
             //move the player down
-            this.y += player.update(100);
+            this.y += this.update(100);
 
             //log the key that was pressed to the console
             console.log(keyPressed);
@@ -270,16 +270,16 @@ class Player {
         //if the game is won reset the player with a small delay
         if (game_won) {
             //sets the player to the starting position
-            const win_delay = setTimeout(function() {
-                player.y = 400;
-                player.x = 200;
-            }, 250);
+            setTimeout(() => {
+                this.y = 400;
+                this.x = 200;
+            }, 50);
         }
         //if the player was in a collision rest the player with out the delay
         if (collision) {
             //sets the player to the starting position
-            player.y = 400;
-            player.x = 200;
+            this.y = 400;
+            this.x = 200;
         }
     }
 
@@ -393,14 +393,14 @@ class Player {
             });
 
             /*when the user clicks the cards or selects there character*/
-            CHARACTER_CARD.addEventListener('click', function() {
+            CHARACTER_CARD.addEventListener('click',() => {
                 console.log(`you selected ${CHARACTER_NAMES[c]}`);
                 //set the player's sprite to the character selected
-                player.sprite = `${CHARACTER_SPRITES[c]}`;
+                this.sprite = `${CHARACTER_SPRITES[c]}`;
 
                 /*setting the is selecting character property to false to allow
                 for player movment now that character select screen is over*/
-                player.isSelectingCharacter = false;
+                this.isSelectingCharacter = false;
 
                 /*take the selection screen off of the page and
                 store into variable for later use,
@@ -442,14 +442,10 @@ class Player {
 let allEnemies = [];
 
 //the queen makes the enemy bugs
-const QUEEN = new Queen;
-
-/*calling the queens generate method,
-passing in the allEnemies array as it's argument*/
-QUEEN.generate(allEnemies);
+new Queen(allEnemies);
 
 // Place the player object in a variable called player
-let player = new Player();
+const player = new Player();
 
 //start the game with a character selection
 player.characterSelect();
