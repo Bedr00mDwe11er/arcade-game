@@ -1,0 +1,56 @@
+/*styles for the character select screen*/
+
+.select-screen {
+    /*background color*/
+    background: #abc;
+    /*setting the height to be the same as the main game screen, so it covers it*/
+    height: 606px;
+    /*rounding out the corners*/
+    border-radius: 1%;
+    /*placing the character select screen on top of the game scene*/
+    margin: 100px 0 -600px 0;
+    position: relative;
+    z-index: '1';
+}
+
+/*styles for the character select screen heading*/
+
+.select-screen-heading {
+    /*setting the font*/
+    font: 3.2em 'VT323', monospace;
+}
+
+
+/*styles for the deck of cards that holds the playable character cards*/
+
+.characters-deck {
+    /*will make the cards display horizontally*/
+    display: flex;
+    flex-flow: row-wrap;
+    /*no dots on the cards*/
+    list-style: none;
+    /*adjusting the placement of the deck*/
+    margin: 0 20px 0 -20px;
+}
+
+
+/*styles for the cards*/
+
+.character-card {
+    /*background color of the cards*/
+    background: #fff;
+    /*change the cursor to indicate the card is clickable*/
+    cursor: pointer;
+    /*rounding the corners of the card*/
+    border-radius: 7%;
+    /*add some space around each card*/
+    margin: 2%;
+    /*add some space inside the card*/
+    padding: 1%;
+    /*size of the cards*/
+    flex: 121px;
+    /*visual appeal*/
+    box-shadow: 10px 10px 10px grey;
+    /*setting the font*/
+    font: 1.2em 'Share Tech Mono', monospace;
+}
